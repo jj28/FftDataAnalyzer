@@ -1,0 +1,209 @@
+<Page x:Class="FftDataAnalyzer.Views.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:vm="clr-namespace:FftDataAnalyzer.ViewModels"
+      Background="{StaticResource PrimaryBackgroundBrush}">
+
+    <Page.DataContext>
+        <vm:SettingsViewModel/>
+    </Page.DataContext>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title -->
+            <TextBlock Grid.Row="0"
+                       Text="Settings"
+                       FontSize="28"
+                       FontWeight="Bold"
+                       Foreground="{StaticResource PrimaryTextBrush}"
+                       Margin="0,0,0,30"/>
+
+            <!-- Database Settings -->
+            <Border Grid.Row="1"
+                    Background="{StaticResource TertiaryBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="30"
+                    Margin="0,0,0,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Section Title -->
+                    <TextBlock Grid.Row="0"
+                               Text="Database Configuration"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource PrimaryTextBrush}"
+                               Margin="0,0,0,20"/>
+
+                    <!-- Connection String -->
+                    <Grid Grid.Row="1" Margin="0,0,0,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Grid.Row="0"
+                                   Text="Connection String"
+                                   FontSize="14"
+                                   Foreground="{StaticResource PrimaryTextBrush}"
+                                   Margin="0,0,0,8"/>
+
+                        <TextBox Grid.Row="1"
+                                 Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding ConnectionString, UpdateSourceTrigger=PropertyChanged}"
+                                 FontFamily="Consolas"
+                                 Margin="0,0,0,10"/>
+
+                        <TextBlock Grid.Row="2"
+                                   Text="Format: Host=localhost;Port=5432;Database=fftdb;Username=postgres;Password=yourpassword"
+                                   FontSize="11"
+                                   Foreground="{StaticResource SecondaryTextBrush}"
+                                   TextWrapping="Wrap"/>
+                    </Grid>
+
+                    <!-- Test Connection Button -->
+                    <Button Grid.Row="2"
+                            Content="Test Database Connection"
+                            Style="{StaticResource PrimaryButton}"
+                            Command="{Binding TestConnectionCommand}"
+                            Padding="15,10"
+                            HorizontalAlignment="Left"
+                            IsEnabled="{Binding IsTestingConnection, Converter={StaticResource InverseBooleanConverter}}"/>
+                </Grid>
+            </Border>
+
+            <!-- File Storage Settings -->
+            <Border Grid.Row="2"
+                    Background="{StaticResource TertiaryBackgroundBrush}"
+                    BorderBrush="{StaticResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="30"
+                    Margin="0,0,0,20">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Section Title -->
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2"
+                               Text="File Storage Paths"
+                               FontSize="18"
+                               FontWeight="Bold"
+                               Foreground="{StaticResource PrimaryTextBrush}"
+                               Margin="0,0,0,20"/>
+
+                    <!-- Upload Path -->
+                    <TextBlock Grid.Row="1" Grid.Column="0"
+                               Text="Upload Path"
+                               FontSize="14"
+                               Foreground="{StaticResource PrimaryTextBrush}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,0,15"/>
+                    <TextBox Grid.Row="1" Grid.Column="1"
+                             Style="{StaticResource ModernTextBox}"
+                             Text="{Binding UploadPath, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,15"/>
+
+                    <!-- Success Path -->
+                    <TextBlock Grid.Row="2" Grid.Column="0"
+                               Text="Success Path"
+                               FontSize="14"
+                               Foreground="{StaticResource PrimaryTextBrush}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,0,15"/>
+                    <TextBox Grid.Row="2" Grid.Column="1"
+                             Style="{StaticResource ModernTextBox}"
+                             Text="{Binding SuccessPath, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,15"/>
+
+                    <!-- Fail Path -->
+                    <TextBlock Grid.Row="3" Grid.Column="0"
+                               Text="Fail Path"
+                               FontSize="14"
+                               Foreground="{StaticResource PrimaryTextBrush}"
+                               VerticalAlignment="Center"
+                               Margin="0,0,0,15"/>
+                    <TextBox Grid.Row="3" Grid.Column="1"
+                             Style="{StaticResource ModernTextBox}"
+                             Text="{Binding FailPath, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,15"/>
+
+                    <!-- Retention Days -->
+                    <TextBlock Grid.Row="4" Grid.Column="0"
+                               Text="Retention Days"
+                               FontSize="14"
+                               Foreground="{StaticResource PrimaryTextBrush}"
+                               VerticalAlignment="Center"/>
+                    <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Horizontal">
+                        <TextBox Style="{StaticResource ModernTextBox}"
+                                 Text="{Binding RetentionDays}"
+                                 Width="100"
+                                 HorizontalAlignment="Left"/>
+                        <TextBlock Text="days"
+                                   FontSize="14"
+                                   Foreground="{StaticResource SecondaryTextBrush}"
+                                   VerticalAlignment="Center"
+                                   Margin="10,0,0,0"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Action Buttons and Status -->
+            <Grid Grid.Row="3">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Buttons -->
+                <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,20">
+                    <Button Content="Reset to Defaults"
+                            Style="{StaticResource SecondaryButton}"
+                            Command="{Binding ResetToDefaultsCommand}"
+                            Padding="15,10"
+                            Margin="0,0,10,0"/>
+                    <Button Content="Save Settings"
+                            Style="{StaticResource PrimaryButton}"
+                            Command="{Binding SaveSettingsCommand}"
+                            Padding="15,10"/>
+                </StackPanel>
+
+                <!-- Status Message -->
+                <Border Grid.Row="1"
+                        Background="{StaticResource SecondaryBackgroundBrush}"
+                        BorderBrush="{StaticResource BorderBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4"
+                        Padding="20">
+                    <TextBlock Text="{Binding StatusMessage}"
+                               FontSize="14"
+                               Foreground="{StaticResource SecondaryTextBrush}"
+                               TextWrapping="Wrap"/>
+                </Border>
+            </Grid>
+        </Grid>
+    </ScrollViewer>
+</Page>
